@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 # 2. Imports from your source code
 # Note: Assuming your imports are correct based on the previous context.
-from model_objects import Product, ProductUnit
+from models.products import Product, ProductUnit
 from teller import Teller
 from receipt_printer import ReceiptPrinter
 from shopping_cart import ShoppingCart

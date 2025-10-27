@@ -4,10 +4,12 @@ Start texttest from a command prompt in the same folder as this file with this c
 texttest -a sr -d .
 """
 
-import sys,csv
+import sys
+import csv
 from pathlib import Path
 
-from model_objects import Product, SpecialOfferType, ProductUnit
+from models.products import Product, ProductUnit
+from models.offers import ProductSpecialOfferType
 from receipt_printer import ReceiptPrinter
 from shopping_cart import ShoppingCart
 from teller import Teller

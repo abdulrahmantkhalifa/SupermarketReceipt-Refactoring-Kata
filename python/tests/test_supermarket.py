@@ -1,6 +1,7 @@
 import unittest
 
-from model_objects import Product, SpecialOfferType, ProductUnit
+from models.products import Product, ProductUnit
+from models.offers import SpecialOfferType
 from shopping_cart import ShoppingCart
 from teller import Teller
 from tests.fake_catalog import FakeCatalog

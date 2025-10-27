@@ -1,6 +1,7 @@
 import math
 
-from model_objects import ProductQuantity, SpecialOfferType, Discount
+from models.products import ProductQuantity
+from models.offers import SpecialOfferType, Discount
 
 
 class ShoppingCart:
@@ -15,6 +16,12 @@ class ShoppingCart:
 
     def add_item(self, product):
         self.add_item_quantity(product, 1.0)
+
+    def get_product_quantity(self, product_name):
+        return self._product_quantities.get(product_name, 0)
+
+    def get_product_price(self, product_name, catalog):
+        return catalog.unit_price.get(product_name, 0.0)
 
     @property
     def product_quantities(self):
