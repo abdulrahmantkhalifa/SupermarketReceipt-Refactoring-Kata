@@ -11,5 +11,8 @@ class FakeCatalog(SupermarketCatalog):
         self.prices[product.name] = price
 
     def unit_price(self, product):
-        return self.prices[product.name]
+        try:
+            return self.prices[product.name]
+        except KeyError as e:
+            raise KeyError("Missing product in prices list") from e
 

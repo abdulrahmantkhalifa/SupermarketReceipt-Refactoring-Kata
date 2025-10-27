@@ -1,2 +1,2 @@
-approvaltests
+approvaltests==15.3.2
 python-dateutil

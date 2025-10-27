@@ -8,6 +8,7 @@
  - price for quantity should be dynamic and not hardcoded , to allow for extesniblitly
  - class naming conventions 
  - file naming conventions 
+ - unversioned package installs 
  - type hints everywhere and doc strings if needed ( last thing )
 
 ## Step 1
@@ -22,6 +23,8 @@
 
 ## step 4 
  - add new features
+ - discount bundles
+ - html reciepts
 
 ## Step 5 
  - clean up code ( naming conventions )

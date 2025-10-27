@@ -1,0 +1,5 @@
+EXCEPTION THROWN:
+Type: KeyError
+Message: 'Missing product in prices list'
+
+This test is characterizing the existing error handling for a missing product price.
