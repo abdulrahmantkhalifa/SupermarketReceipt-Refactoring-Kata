@@ -1,0 +1,12 @@
+apples                              4.97
+  1.99 * 2.500
+rice                                2.49
+toothbrush                          4.95
+  0.99 * 5
+toothpaste                         10.74
+  1.79 * 6
+10.0% off (apples)                 -0.50
+3 for 2 (toothbrush)               -0.99
+5 for 7.49 (toothpaste)            -1.46
+
+Total:                             20.21
