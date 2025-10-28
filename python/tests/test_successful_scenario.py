@@ -8,7 +8,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from models.products import Product, ProductUnit
-from models.offers import ProductSpecialOfferType
+from models.offers import BuyQuantityForAmountStrategy, BuyNGetMFreeStrategy, PercentDiscountStrategy
 from teller import Teller
 from receipt_printer import ReceiptPrinter
 # from catalog import SupermarketCatalog
@@ -41,17 +41,17 @@ class ReceiptApprovalTest(unittest.TestCase):
         teller = Teller(catalog)
         
         # Buy two toothbrushes, get one free (3-for-2 logic)
-        teller.add_special_offer(SpecialOfferType.THREE_FOR_TWO, toothbrush, 0.0) 
+        teller.add_special_offer(BuyNGetMFreeStrategy(toothbrush, required_product_count=3, charge_m=2))
         
         # 20% discount on apples (Percentage discount)
-        teller.add_special_offer(SpecialOfferType.TEN_PERCENT_DISCOUNT, apples, 10.0) 
+        teller.add_special_offer(PercentDiscountStrategy(apples, percentage=10.0))
 
         ## since not implemented will be commented 
         ## 20% discount on apples (Percentage discount)
         # teller.add_special_offer(SpecialOfferType.PERCENT_DISCOUNT, apples, 20.0)
         
         # Five tubes of toothpaste for 7.49 (N for X price logic)
-        teller.add_special_offer(SpecialOfferType.FIVE_FOR_AMOUNT, toothpaste, 7.49)
+        teller.add_special_offer(BuyQuantityForAmountStrategy(toothpaste, 5, 7.49))
         
         #Fill Cart 
         cart = ShoppingCart()

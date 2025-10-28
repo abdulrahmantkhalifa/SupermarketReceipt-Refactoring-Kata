@@ -1,7 +1,7 @@
 import unittest
 
 from models.products import Product, ProductUnit
-from models.offers import SpecialOfferType
+from models.offers import PercentDiscountStrategy
 from shopping_cart import ShoppingCart
 from teller import Teller
 from tests.fake_catalog import FakeCatalog
@@ -17,7 +17,7 @@ class SupermarketTest(unittest.TestCase):
         catalog.add_product(apples, 1.99)
 
         teller = Teller(catalog)
-        teller.add_special_offer(SpecialOfferType.TEN_PERCENT_DISCOUNT, toothbrush, 10.0)
+        teller.add_special_offer(PercentDiscountStrategy(toothbrush, 10.0))
 
         cart = ShoppingCart()
         cart.add_item_quantity(apples, 2.5)
