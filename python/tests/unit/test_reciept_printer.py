@@ -1,9 +1,7 @@
 import unittest
-import math
-from unittest.mock import Mock, patch
 
 # Import the class under test (assuming the file is named receipt_formatter.py or similar)
-from receipt_printer import TextReceiptFormatter, ReceiptFormatter
+from receipt_printer import TextReceiptFormatter
 # Import necessary data model mocks
 from mockers.fake_product import ProductStub
 from mockers.fake_receipt import ReceiptItemStub, ReceiptStub
@@ -18,7 +16,7 @@ class TestTextReceiptFormatter(unittest.TestCase):
         self.formatter = TextReceiptFormatter(columns=40)
         self.apples = ProductStub(name="apples", unit=ProductUnit.KILO)
         self.banana = ProductStub(name="banana", unit=ProductUnit.EACH)
-        
+  
     # --- Test Helper Methods ---
 
     def test_print_price(self):
@@ -40,11 +38,13 @@ class TestTextReceiptFormatter(unittest.TestCase):
         # # KILO unit - Rounding UP from 1.2345 to 1.235
         # item_kilo_up = ReceiptItemStub(self.apples, 1.2345, 2.0, 2.469)
         # # The correct mathematical rounding is 1.235
-        # self.assertEqual(self.formatter._print_quantity(item_kilo_up), "1.235", "Rounding 1.2345 up to 1.235 failed.")
+        # self.assertEqual(self.formatter._print_quantity(item_kilo_up), "1.235",
+        #                  "Rounding 1.2345 up to 1.235 failed.")
 
         # # KILO unit - Rounding DOWN from 1.2344 to 1.234
         # item_kilo_down = ReceiptItemStub(self.apples, 1.2344, 2.0, 2.4688)
-        # self.assertEqual(self.formatter._print_quantity(item_kilo_down), "1.234", "Rounding 1.2344 down to 1.234 failed.")
+        # self.assertEqual(self.formatter._print_quantity(item_kilo_down), "1.234",
+        #                  "Rounding 1.2344 down to 1.234 failed.")
         
         # Test exact integer quantity for KILO (still 3 decimals)
         item_kilo_int = ReceiptItemStub(self.apples, 2.0, 2.0, 4.0)

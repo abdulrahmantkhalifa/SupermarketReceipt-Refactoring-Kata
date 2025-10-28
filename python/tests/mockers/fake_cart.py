@@ -11,5 +11,3 @@ class FakeCart:
 
     def get_product_quantity(self, product):
         return self._quantities.get(product, 0)
-
-

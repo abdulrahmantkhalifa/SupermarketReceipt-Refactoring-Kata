@@ -1,16 +1,18 @@
 from receipt import Receipt
-
+from catalog import SupermarketCatalog
+from models.offers import OfferStrategy
+from shopping_cart import ShoppingCart
 
 class Teller:
 
-    def __init__(self, catalog):
+    def __init__(self, catalog: SupermarketCatalog) -> None:
         self.catalog = catalog
         self.offers = []
 
-    def add_special_offer(self, offer_strategy):
+    def add_special_offer(self, offer_strategy:OfferStrategy) -> None:
         self.offers.append(offer_strategy)
 
-    def checks_out_articles_from(self, cart):
+    def checks_out_articles_from(self, cart: ShoppingCart) -> Receipt:
         receipt = Receipt()
         product_quantities = cart.items
         for pq in product_quantities:
@@ -25,7 +27,7 @@ class Teller:
 
         return receipt
 
-    def _apply_offers(self, receipt, cart):
+    def _apply_offers(self, receipt: Receipt, cart: ShoppingCart) -> None:
         # this is the Context loop for the strategy pattern 
         for strategy in self.offers:
             # Each strategy returns a list of Discount objects (or an empty list)

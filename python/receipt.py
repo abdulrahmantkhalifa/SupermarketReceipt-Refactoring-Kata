@@ -1,4 +1,6 @@
 from receipt_printer import ReceiptFormatter
+from models.products import Product
+from models.discounts import Discount
 
 
 class ReceiptItem:
@@ -22,10 +24,10 @@ class Receipt:
             total += discount.amount
         return total
 
-    def add_product(self, product, quantity, price, total_price):
+    def add_product(self, product: Product, quantity: int | float, price: float, total_price: float) -> None:
         self._items.append(ReceiptItem(product, quantity, price, total_price))
 
-    def add_discount(self, discount):
+    def add_discount(self, discount: Discount) -> None:
         self._discounts.append(discount)
 
     @property
