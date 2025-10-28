@@ -1,56 +1,89 @@
 from models.products import ProductUnit
+from abc import ABC, abstractmethod
 
-class ReceiptPrinter:
-
+class ReceiptFormatter(ABC):
+    """
+    Abstract Base Class defining the interface for all receipt presentation strategies.
+    """
+    
     def __init__(self, columns=40):
         self.columns = columns
-  
-    def print_receipt(self, receipt):
+        
+    @abstractmethod
+    def format_receipt(self, receipt) -> str:
+        """
+        Takes a Receipt object and returns its fully formatted string representation.
+        """
+        pass
+
+class TextReceiptFormatter(ReceiptFormatter):
+    """
+    Concrete Strategy for generating the plain-text, console-ready receipt format.
+    """
+    
+    # __init__ inherited from ReceiptFormatter (self.columns is set)
+
+    def format_receipt(self, receipt) -> str:
+        """
+        Orchestrates the printing process for the text format.
+        This method replaces the old ReceiptPrinter.print_receipt.
+        """
         result = ""
+        
+        # 1. Print Items
         for item in receipt.items:
-            receipt_item = self.print_receipt_item(item)
-            result += receipt_item
+            result += self._print_receipt_item(item)
 
+        # 2. Print Discounts
         for discount in receipt.discounts:
-            discount_presentation = self.print_discount(discount)
-            result += discount_presentation
+            result += self._print_discount(discount)
 
+        # 3. Print Total
         result += "\n"
-        result += self.present_total(receipt)
+        result += self._present_total(receipt)
+        
         return str(result)
 
-    def print_receipt_item(self, item):
-        total_price_printed = self.print_price(item.total_price)
+    # --- Private Helper Methods (Refactored from old class) ---
+
+    def _print_receipt_item(self, item):
+        total_price_printed = self._print_price(item.total_price)
         name = item.product.name
-        line = self.format_line_with_whitespace(name, total_price_printed)
+        line = self._format_line_with_whitespace(name, total_price_printed)
         if item.quantity != 1:
-            line += f"  {self.print_price(item.price)} * {self.print_quantity(item)}\n"
+            line += f"  {self._print_price(item.price)} * {self._print_quantity(item)}\n"
         return line
 
-    def format_line_with_whitespace(self, name, value):
+    def _format_line_with_whitespace(self, name, value):
         line = name
         whitespace_size = self.columns - len(name) - len(value)
-        for i in range(whitespace_size):
-            line += " "
+        # Ensure whitespace_size is non-negative
+        whitespace_size = max(0, whitespace_size) 
+        
+        line += " " * whitespace_size
         line += value
         line += "\n"
         return line
 
-    def print_price(self, price):
+    def _print_price(self, price):
         return "%.2f" % price
 
-    def print_quantity(self, item):
+    def _print_quantity(self, item):
         if ProductUnit.EACH == item.product.unit:
             return str(item.quantity)
         else:
             return '%.3f' % item.quantity
 
-    def print_discount(self, discount):
+    def _print_discount(self, discount):
         name = f"{discount.description} ({discount.product.name})"
-        value = self.print_price(discount.discount_amount)
-        return self.format_line_with_whitespace(name, value)
+        value = self._print_price(discount.amount) # Using the actual discount amount
+        return self._format_line_with_whitespace(name, value)
 
-    def present_total(self, receipt):
+    def _present_total(self, receipt):
         name = "Total: "
-        value = self.print_price(receipt.total_price())
-        return self.format_line_with_whitespace(name, value)
+        value = self._print_price(receipt.total_price())
+        return self._format_line_with_whitespace(name, value)
+
+
+
+

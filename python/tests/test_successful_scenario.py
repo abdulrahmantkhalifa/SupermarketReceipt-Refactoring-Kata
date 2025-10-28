@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from models.products import Product, ProductUnit
 from models.offers import BuyQuantityForAmountStrategy, BuyNGetMFreeStrategy, PercentDiscountStrategy
 from teller import Teller
-from receipt_printer import ReceiptPrinter
+from receipt_printer import TextReceiptFormatter
 # from catalog import SupermarketCatalog
 from shopping_cart import ShoppingCart
 from tests.fake_catalog import FakeCatalog
@@ -62,8 +62,8 @@ class ReceiptApprovalTest(unittest.TestCase):
         
         #Generate Output
         receipt = teller.checks_out_articles_from(cart)
-        printer = ReceiptPrinter()
-        receipt_text = printer.print_receipt(receipt)
+        formatter = TextReceiptFormatter()
+        receipt_text = receipt.generate_output(formatter)
         
         verify(receipt_text)
 

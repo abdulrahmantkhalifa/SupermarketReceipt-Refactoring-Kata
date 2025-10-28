@@ -9,7 +9,7 @@ import csv
 from pathlib import Path
 
 from models.products import Product, ProductUnit
-from models.offers import ProductSpecialOfferType
+from models.offers import SpecialOfferType
 from receipt_printer import ReceiptPrinter
 from shopping_cart import ShoppingCart
 from teller import Teller

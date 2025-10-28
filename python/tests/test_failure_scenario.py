@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 # Note: Assuming your imports are correct based on the previous context.
 from models.products import Product, ProductUnit
 from teller import Teller
-from receipt_printer import ReceiptPrinter
+from receipt_printer import TextReceiptFormatter
 from shopping_cart import ShoppingCart
 from tests.fake_catalog import FakeCatalog
 
@@ -51,8 +51,8 @@ class EdgeCaseApprovalTest(unittest.TestCase):
         try:
             # Note: Using checks_out_articles_from based on your provided file
             receipt = teller.checks_out_articles_from(cart)
-            printer = ReceiptPrinter()
-            receipt_text = printer.print_receipt(receipt)
+            formatter = TextReceiptFormatter()
+            receipt_text = receipt.generate_output(formatter)
             
             # If no exception is thrown, verify the receipt output
             verify(receipt_text)
