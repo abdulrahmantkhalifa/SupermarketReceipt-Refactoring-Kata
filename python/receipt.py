@@ -1,3 +1,5 @@
+from receipt_printer import ReceiptFormatter
+
 
 class ReceiptItem:
     def __init__(self, product, quantity, price, total_price):
@@ -17,7 +19,7 @@ class Receipt:
         for item in self.items:
             total += item.total_price
         for discount in self.discounts:
-            total += discount.discount_amount
+            total += discount.amount
         return total
 
     def add_product(self, product, quantity, price, total_price):
@@ -33,3 +35,10 @@ class Receipt:
     @property
     def discounts(self):
         return self._discounts[:]
+
+    # NEW METHOD: Accept the formatter strategy
+    def generate_output(self, formatter: ReceiptFormatter) -> str:
+        """
+        Uses the provided formatter strategy to generate the receipt output.
+        """
+        return formatter.format_receipt(self)

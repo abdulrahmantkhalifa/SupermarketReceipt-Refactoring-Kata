@@ -10,7 +10,7 @@ class FakeCatalog(SupermarketCatalog):
         self.products[product.name] = product
         self.prices[product.name] = price
 
-    def unit_price(self, product):
+    def get_unit_price(self, product):
         try:
             return self.prices[product.name]
         except KeyError as e:
