@@ -13,10 +13,6 @@ class ConcreteOffer(OfferStrategy):
     def calculate_discount(self, cart, catalog):
         return []
 
-
-
-
-
 class OfferGetApplicableDataTests(unittest.TestCase):
 
     def test_get_applicable_data_returns_zero_when_product_not_in_cart(self):

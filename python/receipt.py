@@ -41,4 +41,6 @@ class Receipt:
         """
         Uses the provided formatter strategy to generate the receipt output.
         """
+        if not formatter:
+            return ''
         return formatter.format_receipt(self)
