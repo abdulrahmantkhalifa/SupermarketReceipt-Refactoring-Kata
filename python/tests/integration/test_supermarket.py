@@ -4,7 +4,7 @@ from models.products import Product, ProductUnit
 from models.offers import PercentDiscountStrategy
 from shopping_cart import ShoppingCart
 from teller import Teller
-from tests.fake_catalog import FakeCatalog
+from tests.mockers.fake_catalog import FakeCatalog
 
 
 class SupermarketTest(unittest.TestCase):

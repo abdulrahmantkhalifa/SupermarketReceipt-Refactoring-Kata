@@ -13,7 +13,7 @@ from teller import Teller
 from receipt_printer import TextReceiptFormatter
 # from catalog import SupermarketCatalog
 from shopping_cart import ShoppingCart
-from tests.fake_catalog import FakeCatalog
+from tests.mockers.fake_catalog import FakeCatalog
 
 class ReceiptApprovalTest(unittest.TestCase):
     

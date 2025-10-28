@@ -1,5 +1,5 @@
 class Discount:
-    def __init__(self, product, description, discount_amount):
+    def __init__(self, product, description, amount):
         self.product = product
         self.description = description
-        self.amount = discount_amount
+        self.amount = amount
