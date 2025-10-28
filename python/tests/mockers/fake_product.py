@@ -5,5 +5,6 @@ class ProductQuantityStub:
 
 # Simple product stub
 class ProductStub:
-    def __init__(self, name):
+    def __init__(self, name, unit=None):
         self.name = name
+        self.unit = unit
