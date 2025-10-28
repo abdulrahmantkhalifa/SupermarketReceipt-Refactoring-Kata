@@ -1,2 +1,2 @@
 approvaltests==15.3.2
-python-dateutil
+python-dateutil==2.9.0.post0

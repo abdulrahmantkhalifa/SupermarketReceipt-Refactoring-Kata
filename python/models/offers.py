@@ -1,18 +1,24 @@
 from abc import ABC, abstractmethod
 from catalog import SupermarketCatalog
 from models.discounts import Discount
+from models.products import Product
+from shopping_cart import ShoppingCart
 
 
 class OfferStrategy(ABC):
 
-    def __init__(self, target_product, required_product_count, discription=None):
+    def __init__(self, target_product: Product, required_product_count: int | float, discription: str =None):
         self.target_product = target_product
         self.required_product_count = required_product_count
         self.description = discription
 
     @abstractmethod
-    def calculate_discount(self, cart, catalog):
-        pass
+    def calculate_discount(self, cart: ShoppingCart , catalog: SupermarketCatalog) -> list[Discount]:
+        """
+        Calculates the discount(s) for the given cart and catalog.
+        This method must be implemented by the concrete strategy.
+        Returns a list of Discount objects (or an empty list if no discount applies).
+        """
 
     @abstractmethod
     def generate_description(self) -> str:
@@ -20,11 +26,10 @@ class OfferStrategy(ABC):
         Generates the formatted string for the discount, e.g., '3 for 2 (toothbrush)'.
         This method must be implemented by the concrete strategy.
         """
-        pass
 
 
 
-    def get_applicable_data(self, cart, catalog: SupermarketCatalog):
+    def get_applicable_data(self, cart: ShoppingCart, catalog: SupermarketCatalog) -> tuple[float, float]:
         """Returns (quantity, unit_price) if product is in cart, otherwise (0, 0.0)"""
             
         # 2. Get data
@@ -42,7 +47,8 @@ class OfferStrategy(ABC):
 
 class BuyNGetMFreeStrategy(OfferStrategy):
     
-    def __init__(self, target_product, required_product_count, charge_m, description=None):
+    def __init__(self, target_product: Product, required_product_count: int | float,
+                charge_m: int | float, description=None):
         # N here is the required product count
         super().__init__(target_product, required_product_count)
         self.charge_m = charge_m
@@ -58,7 +64,7 @@ class BuyNGetMFreeStrategy(OfferStrategy):
         return f"{self.required_product_count} for {self.charge_m}"
 
 
-    def calculate_discount(self, cart, catalog):
+    def calculate_discount(self, cart: ShoppingCart, catalog: SupermarketCatalog) -> list[Discount]:
         quantity, unit_price = self.get_applicable_data(cart, catalog)
 
         # validate threshold is met
@@ -85,7 +91,7 @@ class BuyNGetMFreeStrategy(OfferStrategy):
 
 class PercentDiscountStrategy(OfferStrategy):
     
-    def __init__(self, target_product, percentage, description=None):
+    def __init__(self, target_product: Product, percentage: float, description: str=None) -> None:
         super().__init__(target_product, 1, description)
         self.percentage_decimal = percentage / 100.0 # Store as decimal (0.10)
         self.description = description
@@ -99,7 +105,7 @@ class PercentDiscountStrategy(OfferStrategy):
         return f"{self.percentage_decimal * 100}% off"
 
 
-    def calculate_discount(self, cart, catalog) -> list[Discount]:
+    def calculate_discount(self, cart: ShoppingCart, catalog: SupermarketCatalog) -> list[Discount]:
         quantity, unit_price = self.get_applicable_data(cart, catalog)
 
         # Validate the threshold is met 
@@ -121,7 +127,8 @@ class PercentDiscountStrategy(OfferStrategy):
 
 class BuyQuantityForAmountStrategy(OfferStrategy):
     
-    def __init__(self, target_product, required_product_count, fixed_price_x, description=None):
+    def __init__(self, target_product: Product, required_product_count: int | float,
+                 fixed_price_x: float, description: str=None):
         super().__init__(target_product, required_product_count, description)
         self.fixed_price_x = fixed_price_x # e.g., 7.49 (the deal price)
         self.description = description
@@ -143,7 +150,7 @@ class BuyQuantityForAmountStrategy(OfferStrategy):
         return f"{self.required_product_count} for {amount_formatted}"
 
 
-    def calculate_discount(self, cart, catalog):
+    def calculate_discount(self, cart: ShoppingCart, catalog: SupermarketCatalog) -> list[Discount]:
         quantity, unit_price = self.get_applicable_data(cart, catalog)
         
         # check threshold is met

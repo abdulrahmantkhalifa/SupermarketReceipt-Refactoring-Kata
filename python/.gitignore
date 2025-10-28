@@ -76,3 +76,4 @@ venv
 
 .idea
 .vscode
+.approval_tests_temp

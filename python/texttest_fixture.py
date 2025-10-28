@@ -20,7 +20,7 @@ def read_catalog(catalog_file):
     catalog = FakeCatalog()
     if not catalog_file.exists():
         return catalog
-    with open(catalog_file, "r") as f:
+    with open(catalog_file, "r", encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
             name = row['name']
@@ -34,7 +34,7 @@ def read_catalog(catalog_file):
 def read_offers(offers_file, teller):
     if not offers_file.exists():
         return
-    with open(offers_file, "r") as f:
+    with open(offers_file, "r", encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
             name = row['name']
@@ -48,7 +48,7 @@ def read_basket(cart_file, catalog):
     cart = ShoppingCart()
     if not cart_file.exists():
         return cart
-    with open(cart_file, "r") as f:
+    with open(cart_file, "r", encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
             name = row['name']
